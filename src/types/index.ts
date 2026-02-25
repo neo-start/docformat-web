@@ -47,3 +47,19 @@ export interface ProcessResult {
 }
 
 export type ProcessMode = 'smart' | 'punctuation' | 'analyze';
+
+// 批量处理相关类型
+export interface BatchFileItem {
+  id: string;
+  file: File;
+  status: 'pending' | 'processing' | 'success' | 'error';
+  result?: ProcessResult;
+  outputBlob?: Blob;
+}
+
+export interface BatchProcessResult {
+  total: number;
+  success: number;
+  failed: number;
+  items: BatchFileItem[];
+}

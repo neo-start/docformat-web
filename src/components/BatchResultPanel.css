@@ -1,0 +1,114 @@
+.batch-result-panel {
+  width: 100%;
+  border-radius: 6px;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.batch-result-panel.success {
+  background: var(--success-bg);
+  border: 1px solid var(--success-color);
+}
+
+.batch-result-panel.error {
+  background: var(--error-bg);
+  border: 1px solid var(--error-color);
+}
+
+.batch-result-panel.mixed {
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+}
+
+.batch-result-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.batch-result-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.batch-result-panel.success .batch-result-icon {
+  color: var(--success-color);
+}
+
+.batch-result-panel.error .batch-result-icon {
+  color: var(--error-color);
+}
+
+.batch-result-panel.mixed .batch-result-icon {
+  color: var(--text-muted);
+}
+
+.batch-result-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.batch-result-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.batch-result-panel.success .batch-result-title {
+  color: var(--success-color);
+}
+
+.batch-result-panel.error .batch-result-title {
+  color: var(--error-color);
+}
+
+.batch-result-stats {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.batch-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  background: var(--success-color);
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: filter 0.1s;
+  flex-shrink: 0;
+}
+
+.batch-download-btn:hover {
+  filter: brightness(0.9);
+}
+
+.batch-download-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 640px) {
+  .batch-result-header {
+    flex-wrap: wrap;
+  }
+
+  .batch-download-btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 12px;
+  }
+}
