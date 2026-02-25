@@ -10,23 +10,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid rgba(55, 53, 47, 0.16);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
-  background: white;
+  background: var(--card-bg);
   cursor: pointer;
   transition: all 0.1s ease;
   font-size: 14px;
-  color: rgb(55, 53, 47);
+  color: var(--text-primary);
   text-align: left;
 }
 
 .custom-select-trigger:hover {
-  background: rgba(55, 53, 47, 0.04);
+  background: var(--hover-bg);
 }
 
 .custom-select.open .custom-select-trigger {
-  border-color: rgb(35, 131, 226);
-  box-shadow: rgb(35, 131, 226) 0px 0px 0px 1px inset;
+  border-color: var(--accent-color);
+  box-shadow: var(--accent-color) 0px 0px 0px 1px inset;
 }
 
 .custom-select-value {
@@ -41,7 +41,7 @@
   right: 8px;
   width: 16px;
   height: 16px;
-  color: rgba(55, 53, 47, 0.45);
+  color: var(--text-muted);
   transition: transform 0.15s ease;
   flex-shrink: 0;
 }
@@ -55,11 +55,10 @@
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  background: white;
+  background: var(--card-bg);
   border-radius: 6px;
-  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
-              rgba(15, 15, 15, 0.1) 0px 3px 6px,
-              rgba(15, 15, 15, 0.2) 0px 9px 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
   z-index: 100;
   animation: selectDropdownIn 0.15s ease;
   overflow: hidden;
@@ -93,19 +92,19 @@
   background: transparent;
   cursor: pointer;
   font-size: 14px;
-  color: rgb(55, 53, 47);
+  color: var(--text-primary);
   text-align: left;
   transition: background 0.1s ease;
   position: relative;
 }
 
 .custom-select-option:hover {
-  background: rgba(55, 53, 47, 0.06);
+  background: var(--hover-bg);
 }
 
 .custom-select-option.selected {
-  background: rgba(35, 131, 226, 0.08);
-  color: rgb(35, 131, 226);
+  background: var(--accent-bg);
+  color: var(--accent-color);
 }
 
 .custom-select-check {
@@ -113,5 +112,5 @@
   right: 8px;
   width: 16px;
   height: 16px;
-  color: rgb(35, 131, 226);
+  color: var(--accent-color);
 }

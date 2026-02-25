@@ -5,17 +5,67 @@
 }
 
 :root {
+  /* 浅色主题变量 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f7f7;
+  --card-bg: #ffffff;
+  --text-primary: rgb(55, 53, 47);
+  --text-secondary: rgba(55, 53, 47, 0.65);
+  --text-muted: rgba(55, 53, 47, 0.45);
+  --border-color: rgba(55, 53, 47, 0.16);
+  --border-hover: rgba(55, 53, 47, 0.3);
+  --hover-bg: rgba(55, 53, 47, 0.04);
+  --active-bg: rgba(55, 53, 47, 0.08);
+  --accent-color: rgb(35, 131, 226);
+  --accent-bg: rgba(35, 131, 226, 0.08);
+  --accent-secondary: rgb(46, 170, 220);
+  --accent-secondary-bg: rgba(46, 170, 220, 0.08);
+  --success-color: rgb(68, 131, 97);
+  --success-bg: rgba(77, 171, 154, 0.08);
+  --error-color: rgb(235, 87, 87);
+  --error-bg: rgba(235, 87, 87, 0.08);
+  --shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
+            rgba(15, 15, 15, 0.1) 0px 3px 6px,
+            rgba(15, 15, 15, 0.2) 0px 9px 24px;
+}
+
+[data-theme="dark"] {
+  /* 深色主题变量 */
+  --bg-primary: #191919;
+  --bg-secondary: #202020;
+  --card-bg: #252525;
+  --text-primary: rgba(255, 255, 255, 0.9);
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --text-muted: rgba(255, 255, 255, 0.4);
+  --border-color: rgba(255, 255, 255, 0.13);
+  --border-hover: rgba(255, 255, 255, 0.25);
+  --hover-bg: rgba(255, 255, 255, 0.055);
+  --active-bg: rgba(255, 255, 255, 0.1);
+  --accent-color: rgb(82, 156, 224);
+  --accent-bg: rgba(82, 156, 224, 0.15);
+  --accent-secondary: rgb(82, 190, 224);
+  --accent-secondary-bg: rgba(82, 190, 224, 0.15);
+  --success-color: rgb(108, 181, 137);
+  --success-bg: rgba(108, 181, 137, 0.15);
+  --error-color: rgb(235, 107, 107);
+  --error-bg: rgba(235, 107, 107, 0.15);
+  --shadow: rgba(0, 0, 0, 0.2) 0px 0px 0px 1px,
+            rgba(0, 0, 0, 0.3) 0px 3px 6px,
+            rgba(0, 0, 0, 0.4) 0px 9px 24px;
+}
+
+html {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
     'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light;
-  color: rgb(55, 53, 47);
-  background-color: #ffffff;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 body {
@@ -33,16 +83,14 @@ button {
 }
 
 a {
-  color: rgb(55, 53, 47);
-  text-decoration: underline;
-  text-decoration-color: rgba(55, 53, 47, 0.4);
-  text-underline-offset: 2px;
+  color: var(--accent-color);
+  text-decoration: none;
 }
 
 a:hover {
-  text-decoration-color: rgb(55, 53, 47);
+  text-decoration: underline;
 }
 
 ::selection {
-  background: rgba(45, 170, 219, 0.3);
+  background: var(--accent-bg);
 }

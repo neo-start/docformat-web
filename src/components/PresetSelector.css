@@ -10,7 +10,7 @@
 .preset-selector-title {
   font-size: 14px;
   font-weight: 600;
-  color: rgb(55, 53, 47);
+  color: var(--text-primary);
   margin: 0 0 12px 0;
 }
 
@@ -32,22 +32,22 @@
   align-items: center;
   gap: 10px;
   padding: 12px 14px;
-  border: 1px solid rgba(55, 53, 47, 0.16);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
-  background: #ffffff;
+  background: var(--card-bg);
   cursor: pointer;
   transition: all 0.1s ease;
   text-align: left;
 }
 
 .preset-card:hover:not(:disabled) {
-  background: rgba(55, 53, 47, 0.04);
+  background: var(--hover-bg);
 }
 
 .preset-card.active {
-  border-color: rgb(46, 170, 220);
-  background: rgba(46, 170, 220, 0.04);
-  box-shadow: rgb(46, 170, 220) 0px 0px 0px 1px inset;
+  border-color: var(--accent-secondary);
+  background: var(--accent-secondary-bg);
+  box-shadow: var(--accent-secondary) 0px 0px 0px 1px inset;
 }
 
 .preset-card:disabled {
@@ -58,11 +58,11 @@
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-  color: rgba(55, 53, 47, 0.45);
+  color: var(--text-muted);
 }
 
 .preset-card.active .preset-icon {
-  color: rgb(46, 170, 220);
+  color: var(--accent-secondary);
 }
 
 .preset-info {
@@ -76,16 +76,16 @@
 .preset-name {
   font-size: 14px;
   font-weight: 500;
-  color: rgb(55, 53, 47);
+  color: var(--text-primary);
 }
 
 .preset-description {
   font-size: 11px;
-  color: rgba(55, 53, 47, 0.5);
+  color: var(--text-muted);
 }
 
 .preset-card.active .preset-name {
-  color: rgb(46, 170, 220);
+  color: var(--accent-secondary);
 }
 
 /* 设置小按钮 */
@@ -93,10 +93,10 @@
   width: 28px;
   height: 28px;
   padding: 5px;
-  border: 1px solid rgba(55, 53, 47, 0.16);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
-  background: white;
-  color: rgba(55, 53, 47, 0.5);
+  background: var(--card-bg);
+  color: var(--text-muted);
   cursor: pointer;
   transition: all 0.1s ease;
   flex-shrink: 0;
@@ -106,9 +106,9 @@
 }
 
 .preset-settings-btn:hover {
-  background: rgba(55, 53, 47, 0.08);
-  border-color: rgba(55, 53, 47, 0.3);
-  color: rgb(55, 53, 47);
+  background: var(--hover-bg);
+  border-color: var(--border-hover);
+  color: var(--text-secondary);
 }
 
 .preset-settings-btn svg {
@@ -117,11 +117,10 @@
 }
 
 .preset-card.active .preset-settings-btn {
-  border-color: rgba(46, 170, 220, 0.3);
-  color: rgb(46, 170, 220);
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
 }
 
 .preset-card.active .preset-settings-btn:hover {
-  background: rgba(46, 170, 220, 0.1);
-  border-color: rgb(46, 170, 220);
+  background: var(--accent-secondary-bg);
 }

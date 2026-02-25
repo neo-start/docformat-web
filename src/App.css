@@ -2,7 +2,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: var(--bg-primary);
+  transition: background-color 0.2s ease;
 }
 
 .app-header {
@@ -13,17 +14,24 @@
   margin: 0 auto;
 }
 
+.app-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
 .app-title {
   font-size: 40px;
   font-weight: 700;
-  color: rgb(55, 53, 47);
+  color: var(--text-primary);
   margin: 0;
   letter-spacing: -0.03em;
 }
 
 .app-subtitle {
   font-size: 16px;
-  color: rgba(55, 53, 47, 0.65);
+  color: var(--text-secondary);
   margin: 12px 0 0 0;
   font-weight: 400;
 }
@@ -40,7 +48,11 @@
 }
 
 .app-section {
-  /* Notion 风格：无边框卡片 */
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .process-btn {
@@ -52,28 +64,25 @@
   padding: 10px 16px;
   border: none;
   border-radius: 6px;
-  background: rgb(35, 131, 226);
+  background: var(--accent-color);
   color: white;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.1s ease;
-  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset,
-              rgba(15, 15, 15, 0.1) 0px 1px 2px;
 }
 
 .process-btn:hover:not(:disabled) {
-  background: rgb(0, 117, 211);
+  filter: brightness(0.9);
 }
 
 .process-btn:active:not(:disabled) {
-  background: rgb(0, 100, 180);
+  filter: brightness(0.85);
 }
 
 .process-btn:disabled {
-  background: rgba(55, 53, 47, 0.08);
-  color: rgba(55, 53, 47, 0.4);
-  box-shadow: none;
+  background: var(--active-bg);
+  color: var(--text-muted);
   cursor: not-allowed;
 }
 
@@ -100,18 +109,20 @@
 .app-footer {
   text-align: center;
   padding: 24px;
-  border-top: 1px solid rgba(55, 53, 47, 0.09);
+  border-top: 1px solid var(--border-color);
+  background: var(--card-bg);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .app-footer p {
   margin: 0;
   font-size: 12px;
-  color: rgba(55, 53, 47, 0.5);
+  color: var(--text-muted);
 }
 
 .app-footer .separator {
   margin: 0 8px;
-  color: rgba(55, 53, 47, 0.2);
+  color: var(--border-color);
 }
 
 @media (max-width: 640px) {
@@ -130,5 +141,10 @@
   .app-main {
     padding: 0 16px 48px;
     gap: 24px;
+  }
+
+  .app-section {
+    padding: 16px;
+    border-radius: 10px;
   }
 }

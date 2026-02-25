@@ -2,16 +2,16 @@
   display: flex;
   align-items: center;
   height: 32px;
-  border: 1px solid rgba(55, 53, 47, 0.16);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
-  background: white;
+  background: var(--card-bg);
   overflow: hidden;
   transition: all 0.1s ease;
 }
 
 .number-input:focus-within {
-  border-color: rgb(35, 131, 226);
-  box-shadow: rgb(35, 131, 226) 0px 0px 0px 1px inset;
+  border-color: var(--accent-color);
+  box-shadow: var(--accent-color) 0px 0px 0px 1px inset;
 }
 
 .number-input-btn {
@@ -22,19 +22,19 @@
   justify-content: center;
   border: none;
   background: transparent;
-  color: rgba(55, 53, 47, 0.5);
+  color: var(--text-muted);
   cursor: pointer;
   transition: all 0.1s ease;
   flex-shrink: 0;
 }
 
 .number-input-btn:hover {
-  background: rgba(55, 53, 47, 0.08);
-  color: rgb(55, 53, 47);
+  background: var(--hover-bg);
+  color: var(--text-primary);
 }
 
 .number-input-btn:active {
-  background: rgba(55, 53, 47, 0.12);
+  background: var(--hover-bg);
 }
 
 .number-input-btn svg {
@@ -56,7 +56,7 @@
   border: none;
   background: transparent;
   font-size: 14px;
-  color: rgb(55, 53, 47);
+  color: var(--text-primary);
   text-align: center;
   outline: none;
   padding: 0;
@@ -64,7 +64,7 @@
 
 .number-input-suffix {
   font-size: 12px;
-  color: rgba(55, 53, 47, 0.5);
+  color: var(--text-muted);
   margin-left: 2px;
   flex-shrink: 0;
 }

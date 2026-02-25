@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { FileUpload, ModeSelector, PresetSelector, ResultPanel, CustomSettingsModal } from './components';
+import { FileUpload, ModeSelector, PresetSelector, ResultPanel, CustomSettingsModal, ThemeToggle } from './components';
 import { processDocx, analyzeDocx } from './lib/docx-processor';
 import { presets, defaultPreset } from './config/presets';
 import type { ProcessMode, ProcessResult, FormatPreset } from './types';
@@ -110,7 +110,10 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1 className="app-title">公文格式处理工具</h1>
+        <div className="app-header-top">
+          <h1 className="app-title">公文格式处理工具</h1>
+          <ThemeToggle />
+        </div>
         <p className="app-subtitle">一键修复 Word 文档格式，符合 GB/T 9704-2012 标准</p>
       </header>
 
