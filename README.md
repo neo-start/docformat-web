@@ -11,7 +11,7 @@
 
 纯浏览器本地处理 · 文件不上传服务器 · 隐私安全
 
-[在线体验](#在线体验) · [功能特性](#功能特性) · [快速开始](#快速开始)
+[在线体验](https://neo-start.github.io/docformat-web/) · [功能特性](#功能特性) · [快速开始](#快速开始)
 
 ---
 
@@ -100,7 +100,9 @@ npm run build
 
 ## 🌐 在线体验
 
-部署到 GitHub Pages / Vercel / Netlify 后即可在线使用。
+**👉 [立即体验](https://neo-start.github.io/docformat-web/)**
+
+无需安装，打开浏览器即可使用。
 
 ## ⚠️ 限制说明
 
