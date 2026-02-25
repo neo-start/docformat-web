@@ -1,0 +1,81 @@
+.mode-selector {
+  width: 100%;
+}
+
+.mode-selector-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(55, 53, 47);
+  margin: 0 0 12px 0;
+}
+
+.mode-cards {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .mode-cards {
+    flex-direction: column;
+  }
+}
+
+.mode-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 6px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  text-align: left;
+}
+
+.mode-card:hover {
+  background: rgba(55, 53, 47, 0.04);
+}
+
+.mode-card.active {
+  border-color: rgb(35, 131, 226);
+  background: rgba(35, 131, 226, 0.04);
+  box-shadow: rgb(35, 131, 226) 0px 0px 0px 1px inset;
+}
+
+.mode-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: rgba(55, 53, 47, 0.45);
+}
+
+.mode-card.active .mode-icon {
+  color: rgb(35, 131, 226);
+}
+
+.mode-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.mode-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(55, 53, 47);
+}
+
+.mode-description {
+  font-size: 12px;
+  color: rgba(55, 53, 47, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mode-card.active .mode-label {
+  color: rgb(35, 131, 226);
+}
