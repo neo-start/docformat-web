@@ -1,7 +1,5 @@
 .batch-result-panel {
   width: 100%;
-  border-radius: 6px;
-  padding: 16px;
   animation: fadeIn 0.2s ease;
 }
 
@@ -10,17 +8,24 @@
   to { opacity: 1; }
 }
 
-.batch-result-panel.success {
+/* Summary Section */
+.batch-result-summary {
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.batch-result-summary.success {
   background: var(--success-bg);
   border: 1px solid var(--success-color);
 }
 
-.batch-result-panel.error {
+.batch-result-summary.error {
   background: var(--error-bg);
   border: 1px solid var(--error-color);
 }
 
-.batch-result-panel.mixed {
+.batch-result-summary.mixed {
   background: var(--hover-bg);
   border: 1px solid var(--border-color);
 }
@@ -37,15 +42,15 @@
   flex-shrink: 0;
 }
 
-.batch-result-panel.success .batch-result-icon {
+.batch-result-summary.success .batch-result-icon {
   color: var(--success-color);
 }
 
-.batch-result-panel.error .batch-result-icon {
+.batch-result-summary.error .batch-result-icon {
   color: var(--error-color);
 }
 
-.batch-result-panel.mixed .batch-result-icon {
+.batch-result-summary.mixed .batch-result-icon {
   color: var(--text-muted);
 }
 
@@ -63,11 +68,11 @@
   color: var(--text-primary);
 }
 
-.batch-result-panel.success .batch-result-title {
+.batch-result-summary.success .batch-result-title {
   color: var(--success-color);
 }
 
-.batch-result-panel.error .batch-result-title {
+.batch-result-summary.error .batch-result-title {
   color: var(--error-color);
 }
 
@@ -101,6 +106,161 @@
   height: 16px;
 }
 
+/* Detailed Results Section */
+.batch-result-details {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.file-result-item {
+  border-bottom: 1px solid var(--border-color);
+  background: var(--card-bg);
+}
+
+.file-result-item:last-child {
+  border-bottom: none;
+}
+
+.file-result-item.success {
+  border-left: 3px solid var(--success-color);
+}
+
+.file-result-item.error {
+  border-left: 3px solid var(--error-color);
+}
+
+.file-result-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  transition: background 0.1s;
+}
+
+.file-result-header.expandable {
+  cursor: pointer;
+}
+
+.file-result-header.expandable:hover {
+  background: var(--hover-bg);
+}
+
+.file-result-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.file-result-item.success .file-result-icon {
+  color: var(--success-color);
+}
+
+.file-result-item.error .file-result-icon {
+  color: var(--error-color);
+}
+
+.file-result-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.file-result-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-result-message {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.file-result-item.success .file-result-message {
+  color: var(--success-color);
+}
+
+.file-result-item.error .file-result-message {
+  color: var(--error-color);
+}
+
+.file-result-expand {
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.file-result-expand.expanded {
+  transform: rotate(180deg);
+}
+
+.file-result-download {
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  border: none;
+  background: transparent;
+  color: var(--success-color);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.1s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-result-download:hover {
+  background: var(--success-bg);
+}
+
+.file-result-download svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Detail Items */
+.file-result-details {
+  padding: 0 14px 14px 46px;
+  animation: slideDown 0.15s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.file-result-detail-item {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 4px 0;
+  font-family: 'SFMono-Regular', Menlo, Consolas, 'PT Mono', 'Liberation Mono', Courier, monospace;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.file-result-item.success .file-result-detail-item {
+  color: var(--success-color);
+}
+
+.file-result-item.error .file-result-detail-item {
+  color: var(--error-color);
+}
+
 @media (max-width: 640px) {
   .batch-result-header {
     flex-wrap: wrap;
@@ -110,5 +270,9 @@
     width: 100%;
     justify-content: center;
     margin-top: 12px;
+  }
+
+  .file-result-details {
+    padding-left: 14px;
   }
 }
