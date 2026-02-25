@@ -258,6 +258,20 @@ export async function processDocx(
 }
 
 /**
+ * 解析页边距（twips 转 cm）
+ */
+function twipsToCm(twips: number): number {
+  return Math.round((twips / 567) * 100) / 100;
+}
+
+/**
+ * 解析字号（半磅转磅）
+ */
+function halfPointsToPoints(halfPoints: number): number {
+  return halfPoints / 2;
+}
+
+/**
  * 分析 DOCX 文件
  */
 export async function analyzeDocx(file: File): Promise<ProcessResult> {
@@ -276,21 +290,115 @@ export async function analyzeDocx(file: File): Promise<ProcessResult> {
     const texts = extractTextFromXml(documentXml);
     const fullText = texts.map(t => unescapeXml(t)).join('');
 
-    // 分析标点问题
-    const punctuationIssues = analyzePunctuation(fullText);
-    if (punctuationIssues.length > 0) {
-      details.push('【标点问题】');
-      details.push(...punctuationIssues.map(issue => `  - ${issue}`));
-    }
-
-    // 统计信息
+    // ========== 文档统计 ==========
     const charCount = fullText.length;
+    const charCountNoSpace = fullText.replace(/\s/g, '').length;
     const paragraphCount = (documentXml.match(/<w:p[ >]/g) || []).length;
 
-    details.push('');
     details.push('【文档统计】');
-    details.push(`  - 字符数：${charCount}`);
-    details.push(`  - 段落数：${paragraphCount}`);
+    details.push(`  字符数：${charCount}（不含空格：${charCountNoSpace}）`);
+    details.push(`  段落数：${paragraphCount}`);
+
+    // ========== 页面设置 ==========
+    details.push('');
+    details.push('【页面设置】');
+
+    // 解析页边距
+    const pgMarMatch = documentXml.match(/<w:pgMar\s+([^/]+)\/>/);
+    if (pgMarMatch) {
+      const attrs = pgMarMatch[1];
+      const top = attrs.match(/w:top="(\d+)"/)?.[1];
+      const bottom = attrs.match(/w:bottom="(\d+)"/)?.[1];
+      const left = attrs.match(/w:left="(\d+)"/)?.[1];
+      const right = attrs.match(/w:right="(\d+)"/)?.[1];
+
+      if (top && bottom && left && right) {
+        details.push(`  页边距：上 ${twipsToCm(parseInt(top))}cm，下 ${twipsToCm(parseInt(bottom))}cm，左 ${twipsToCm(parseInt(left))}cm，右 ${twipsToCm(parseInt(right))}cm`);
+      }
+    } else {
+      details.push('  页边距：未检测到（使用默认值）');
+    }
+
+    // 解析纸张大小
+    const pgSzMatch = documentXml.match(/<w:pgSz\s+([^/]+)\/>/);
+    if (pgSzMatch) {
+      const attrs = pgSzMatch[1];
+      const w = attrs.match(/w:w="(\d+)"/)?.[1];
+      const h = attrs.match(/w:h="(\d+)"/)?.[1];
+
+      if (w && h) {
+        const widthCm = twipsToCm(parseInt(w));
+        const heightCm = twipsToCm(parseInt(h));
+        // 判断纸张类型
+        let paperType = '自定义';
+        if (Math.abs(widthCm - 21) < 0.5 && Math.abs(heightCm - 29.7) < 0.5) {
+          paperType = 'A4';
+        } else if (Math.abs(widthCm - 29.7) < 0.5 && Math.abs(heightCm - 21) < 0.5) {
+          paperType = 'A4 横向';
+        }
+        details.push(`  纸张大小：${widthCm}cm × ${heightCm}cm（${paperType}）`);
+      }
+    }
+
+    // ========== 字体分析 ==========
+    details.push('');
+    details.push('【字体使用】');
+
+    const fonts = new Map<string, number>();
+    const fontMatches = documentXml.matchAll(/w:(?:ascii|eastAsia|hAnsi)="([^"]+)"/g);
+    for (const match of fontMatches) {
+      const font = match[1];
+      fonts.set(font, (fonts.get(font) || 0) + 1);
+    }
+
+    if (fonts.size > 0) {
+      const sortedFonts = Array.from(fonts.entries()).sort((a, b) => b[1] - a[1]);
+      for (const [font, count] of sortedFonts.slice(0, 5)) {
+        details.push(`  ${font}：${count} 处`);
+      }
+      if (sortedFonts.length > 5) {
+        details.push(`  ...还有 ${sortedFonts.length - 5} 种字体`);
+      }
+    } else {
+      details.push('  未检测到字体设置');
+    }
+
+    // ========== 字号分析 ==========
+    details.push('');
+    details.push('【字号使用】');
+
+    const fontSizes = new Map<number, number>();
+    const sizeMatches = documentXml.matchAll(/<w:sz\s+w:val="(\d+)"\/>/g);
+    for (const match of sizeMatches) {
+      const size = halfPointsToPoints(parseInt(match[1]));
+      fontSizes.set(size, (fontSizes.get(size) || 0) + 1);
+    }
+
+    if (fontSizes.size > 0) {
+      const sortedSizes = Array.from(fontSizes.entries()).sort((a, b) => b[1] - a[1]);
+      for (const [size, count] of sortedSizes.slice(0, 5)) {
+        details.push(`  ${size}磅：${count} 处`);
+      }
+      if (sortedSizes.length > 5) {
+        details.push(`  ...还有 ${sortedSizes.length - 5} 种字号`);
+      }
+    } else {
+      details.push('  未检测到字号设置');
+    }
+
+    // ========== 标点问题 ==========
+    const punctuationIssues = analyzePunctuation(fullText);
+    if (punctuationIssues.length > 0) {
+      details.push('');
+      details.push('【标点问题】');
+      for (const issue of punctuationIssues) {
+        details.push(`  ${issue}`);
+      }
+    } else {
+      details.push('');
+      details.push('【标点问题】');
+      details.push('  未发现标点问题');
+    }
 
     return {
       success: true,

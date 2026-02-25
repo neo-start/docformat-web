@@ -177,35 +177,91 @@ export function fixPunctuation(text: string): string {
 }
 
 /**
- * 分析文本中的标点问题
+ * 标点分析结果
+ */
+export interface PunctuationIssue {
+  type: string;
+  count: number;
+  examples: string[];
+  suggestion: string;
+}
+
+/**
+ * 分析文本中的标点问题（增强版）
  */
 export function analyzePunctuation(text: string): string[] {
   const issues: string[] = [];
 
   if (!text) return issues;
 
-  // 检测英文标点
-  if (/[()[\]{}]/.test(text) && hasChinese(text)) {
-    issues.push('发现英文括号，建议替换为中文括号');
+  const isChinese = hasChinese(text);
+
+  // 检测英文括号
+  const englishBrackets = text.match(/[()[\]{}]/g);
+  if (englishBrackets && isChinese) {
+    const count = englishBrackets.length;
+    issues.push(`英文括号：${count} 处，建议替换为中文括号`);
   }
 
-  if (/[:;?!]/.test(text) && hasChinese(text)) {
-    issues.push('发现英文标点（冒号、分号、问号、感叹号），建议替换为中文标点');
+  // 检测英文冒号（排除时间和URL）
+  const colonMatches = text.match(/(?<!\d):(?!\d|\/\/)/g);
+  if (colonMatches && isChinese) {
+    issues.push(`英文冒号：${colonMatches.length} 处，建议替换为中文冒号`);
   }
 
-  // 检测引号问题
-  if (/["']/.test(text)) {
-    issues.push('发现直引号，建议替换为中文弯引号');
+  // 检测英文分号
+  const semicolonMatches = text.match(/;/g);
+  if (semicolonMatches && isChinese) {
+    issues.push(`英文分号：${semicolonMatches.length} 处，建议替换为中文分号`);
+  }
+
+  // 检测英文问号
+  const questionMatches = text.match(/\?/g);
+  if (questionMatches && isChinese) {
+    issues.push(`英文问号：${questionMatches.length} 处，建议替换为中文问号`);
+  }
+
+  // 检测英文感叹号
+  const exclamationMatches = text.match(/!/g);
+  if (exclamationMatches && isChinese) {
+    issues.push(`英文感叹号：${exclamationMatches.length} 处，建议替换为中文感叹号`);
+  }
+
+  // 检测直引号
+  const straightDoubleQuotes = text.match(/"/g);
+  if (straightDoubleQuotes) {
+    issues.push(`直双引号：${straightDoubleQuotes.length} 处，建议替换为中文弯引号 ""`);
+  }
+
+  const straightSingleQuotes = text.match(/'/g);
+  if (straightSingleQuotes) {
+    issues.push(`直单引号：${straightSingleQuotes.length} 处，建议替换为中文弯引号 ''`);
   }
 
   // 检测省略号问题
-  if (/\.{3,}/.test(text)) {
-    issues.push('发现连续句点，建议替换为省略号（……）');
+  const dotEllipsis = text.match(/\.{3,}/g);
+  if (dotEllipsis) {
+    issues.push(`连续句点：${dotEllipsis.length} 处，建议替换为省略号 ……`);
   }
 
   // 检测破折号问题
-  if (/--/.test(text)) {
-    issues.push('发现连续短横线，建议替换为破折号（——）');
+  const dashMatches = text.match(/--+/g);
+  if (dashMatches) {
+    issues.push(`连续短横线：${dashMatches.length} 处，建议替换为破折号 ——`);
+  }
+
+  // 检测英文逗号
+  const commaBeforeChinese = text.match(/,[\u4e00-\u9fff]/g);
+  const commaAfterChinese = text.match(/[\u4e00-\u9fff],/g);
+  const totalEnglishCommas = (commaBeforeChinese?.length || 0) + (commaAfterChinese?.length || 0);
+  if (totalEnglishCommas > 0) {
+    issues.push(`中文环境英文逗号：${totalEnglishCommas} 处，建议替换为中文逗号`);
+  }
+
+  // 检测英文句号
+  const periodAfterChinese = text.match(/[\u4e00-\u9fff]\.(?:\s|$)/g);
+  if (periodAfterChinese) {
+    issues.push(`中文后英文句号：${periodAfterChinese.length} 处，建议替换为中文句号`);
   }
 
   return issues;
