@@ -1,73 +1,100 @@
-# React + TypeScript + Vite
+# 公文格式处理工具 Web 版
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 本项目基于 [docformat-gui](https://github.com/KaguraNanaga/docformat-gui) 二次改造，将原 Python + Tkinter 桌面应用重构为 React + TypeScript Web 应用。
 
-Currently, two official plugins are available:
+一键修复 Word 文档格式，符合 GB/T 9704-2012 国家标准。纯浏览器本地处理，文件不上传服务器。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 截图预览
 
-## React Compiler
+![主界面](./screenshots/main.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+![自定义设置](./screenshots/settings.png)
 
-## Expanding the ESLint configuration
+## 功能特性
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 三种处理模式
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| 模式 | 说明 |
+|------|------|
+| 智能处理 | 标点修复 + 格式排版，一步到位 |
+| 标点修复 | 仅修复标点符号，保留原有格式 |
+| 格式诊断 | 仅分析文档问题，不做修改 |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 格式预设
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **公文格式** - GB/T 9704-2012 国家标准
+- **学术论文** - 论文排版规范
+- **法律文书** - 法律文书格式
+- **自定义格式** - 支持自定义页边距、字体、字号、行距等参数
+
+### 标点修复
+
+- 英文标点自动转换为中文标点（括号、冒号、分号、问号、感叹号）
+- 引号智能配对（直引号转弯引号）
+- 省略号、破折号标准化
+- 保护特殊格式（URL、邮箱、时间、文件路径等不被误转换）
+
+### 格式排版
+
+- 页边距设置
+- 字体、字号设置
+- 行距设置
+- 首行缩进
+
+## 技术栈
+
+- **框架**: React 18 + TypeScript
+- **构建**: Vite
+- **文档处理**: JSZip（解析/生成 DOCX）
+- **样式**: CSS（Notion 风格）
+
+## 快速开始
+
+### 安装依赖
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 开发模式
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+### 构建生产版本
+
+```bash
+npm run build
+```
+
+构建产物在 `dist/` 目录，可直接部署到任何静态网站托管服务。
+
+## 在线体验
+
+部署到 GitHub Pages / Vercel / Netlify 后即可在线使用。
+
+## 限制说明
+
+- **仅支持 .docx 格式**（不支持 .doc / .wps）
+- 浏览器环境无法检测系统字体，设置的字体需要用户电脑已安装才能正确显示
+- 复杂表格、图片等元素的格式处理可能不完善
+
+## 与原项目的区别
+
+| 特性 | 原项目 (Python) | Web 版 |
+|------|----------------|--------|
+| 运行环境 | 需安装 Python 或使用打包的 exe | 浏览器直接运行 |
+| 支持格式 | .docx / .doc / .wps | 仅 .docx |
+| 部署方式 | 本地安装 | 静态网站部署 |
+| 跨平台 | 需分别打包 | 天然跨平台 |
+
+## 致谢
+
+- [docformat-gui](https://github.com/KaguraNanaga/docformat-gui) - 原始项目
+- [JSZip](https://stuk.github.io/jszip/) - DOCX 文件处理
+- [Notion](https://notion.so) - UI 设计灵感
+
+## License
+
+MIT
