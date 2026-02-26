@@ -12,6 +12,7 @@ export function BatchResultPanel({ files }: BatchResultPanelProps) {
 
   const processedFiles = files.filter(f => f.status === 'success' || f.status === 'error');
   const successFiles = files.filter(f => f.status === 'success');
+  const downloadableFiles = files.filter(f => f.status === 'success' && f.outputBlob);
   const errorFiles = files.filter(f => f.status === 'error');
 
   if (processedFiles.length === 0) return null;
@@ -29,15 +30,14 @@ export function BatchResultPanel({ files }: BatchResultPanelProps) {
   };
 
   const handleDownloadAll = async () => {
-    const filesToDownload = successFiles.filter(f => f.outputBlob);
-    if (filesToDownload.length === 0) return;
+    if (downloadableFiles.length === 0) return;
 
-    if (filesToDownload.length === 1) {
-      downloadSingleFile(filesToDownload[0]);
+    if (downloadableFiles.length === 1) {
+      downloadSingleFile(downloadableFiles[0]);
     } else {
       const zip = new JSZip();
 
-      for (const item of filesToDownload) {
+      for (const item of downloadableFiles) {
         if (item.outputBlob) {
           const fileName = item.file.name.replace(/\.docx$/i, '_formatted.docx');
           zip.file(fileName, item.outputBlob);
@@ -96,14 +96,14 @@ export function BatchResultPanel({ files }: BatchResultPanelProps) {
               成功 {successFiles.length} 个，失败 {errorFiles.length} 个
             </span>
           </div>
-          {successFiles.length > 0 && (
+          {downloadableFiles.length > 0 && (
             <button className="batch-download-btn" onClick={handleDownloadAll}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              {successFiles.length === 1 ? '下载文件' : '下载全部'}
+              {downloadableFiles.length === 1 ? '下载文件' : '下载全部'}
             </button>
           )}
         </div>
